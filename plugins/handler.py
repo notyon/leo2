@@ -40,6 +40,43 @@ async def on_message(client: Client, msg: Message):
         # print(f"-> {anu}")
 
         command = msg.text or msg.caption
+        
+        # Cek apakah user belum join channel utama
+        try:
+            member = await client.get_chat_member(config.channel_1, uid)
+            if member.status not in ["member", "administrator", "creator"]:
+                raise Exception("Belum join")
+        
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
+            # Mute user dari Channel 2
+            await client.restrict_chat_member(
+                config.channel_2,
+                uid,
+                permissions=types.ChatPermissions()
+            )
+
+            # Kirim pesan dan tombol "Unmute saya"
+            await msg.reply(
+                config.pesan_join,
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("✅ Unmute saya", callback_data="unmute_saya")]
+                ])
+            )
+            return
+
+
         if command != None:
             if command == '/start':  # menampilkan perintah start
                 return await start_handler(client, msg)
@@ -110,7 +147,20 @@ async def on_message(client: Client, msg: Message):
                             return await msg.reply('Terdeteksi username channel/grup tidak dapat mengirim menfess')
                         elif tipe.type == enums.ChatType.GROUP:
                             return await msg.reply('Terdeteksi username channel/grup tidak dapat mengirim menfess')
-                    except:
+                    
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
                         pass
                 z = re.search(r"(?:^|\s)(t\.me|telegram\.me)\/([-a-zA-Z0-9@:%._\+~#=]{1,256})", command.lower())
                 if z:
@@ -124,7 +174,20 @@ async def on_message(client: Client, msg: Message):
                             return await msg.reply('Terdeteksi username channel/grup tidak dapat mengirim menfess')
                         elif tipe.type == enums.ChatType.GROUP:
                             return await msg.reply('Terdeteksi username channel/grup tidak dapat mengirim menfess')
-                    except:
+                    
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
                         return await msg.reply('Terdeteksi link channel/grup/tautan tidak dapat mengirim menfess')
                 u = re.search(r"(?:^|\s)https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b\/([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)", command.lower())
                 if u:
@@ -138,7 +201,20 @@ async def on_message(client: Client, msg: Message):
                             return await msg.reply('Terdeteksi link channel/grup tidak dapat mengirim menfess')
                         elif tipe.type == enums.ChatType.GROUP:
                             return await msg.reply('Terdeteksi link channel/grup tidak dapat mengirim menfess')
-                    except:
+                    
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
                         return await msg.reply('Terdeteksi link channel/grup/tautan tidak dapat mengirim menfess')
                 key = x.group(1)
                 hastag = config.hastag.split('|')
@@ -175,11 +251,61 @@ async def on_message(client: Client, msg: Message):
                     if x.group(1) in [hastag[0], hastag [1]]:
                         try:
                             await client.delete_messages(msg.chat.id, msg.id)
-                        except:
+                        
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
                             pass
             else:
                 return
         
+        
+        # Cek apakah user belum join channel utama
+        try:
+            member = await client.get_chat_member(config.channel_1, uid)
+            if member.status not in ["member", "administrator", "creator"]:
+                raise Exception("Belum join")
+        
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
+            # Mute user dari Channel 2
+            await client.restrict_chat_member(
+                config.channel_2,
+                uid,
+                permissions=types.ChatPermissions()
+            )
+
+            # Kirim pesan dan tombol "Unmute saya"
+            await msg.reply(
+                config.pesan_join,
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("✅ Unmute saya", callback_data="unmute_saya")]
+                ])
+            )
+            return
+
+
         if command != None:
             return
 
@@ -203,5 +329,58 @@ async def on_callback_query(client: Client, query: CallbackQuery):
             await broadcast_ya(client, query)
         elif query.data == 'tidak_confirm':
             await close_cbb(client, query)
+    
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
     except:
         pass
+
+
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+import config
+
+@Bot.on_message(filters.chat(config.channel_2))
+async def cek_keanggotaan_channel(client: Client, msg: Message):
+    user_id = msg.from_user.id
+    try:
+        member = await client.get_chat_member(config.channel_1, user_id)
+        if member.status not in ["member", "administrator", "creator"]:
+            raise Exception("Not a member")
+    
+        elif query.data == 'unmute_saya':
+            user_id = query.from_user.id
+            try:
+                member = await client.get_chat_member(config.channel_1, user_id)
+                if member.status in ["member", "administrator", "creator"]:
+                    await client.unban_chat_member(config.channel_2, user_id)
+                    await query.message.edit_text("✅ Kamu sudah bergabung, sekarang kamu bisa kirim pesan!")
+                else:
+                    await query.answer("❌ Kamu belum join channel.", show_alert=True)
+            except:
+                await query.answer("⚠️ Gagal cek. Mungkin kamu belum join?", show_alert=True)
+    
+    except:
+        # Mute user dari group
+        await client.restrict_chat_member(
+            config.channel_2,
+            user_id,
+            permissions=types.ChatPermissions()
+        )
+
+        # Kirim pesan mute dengan tombol "Unmute saya"
+        await msg.reply(
+            config.pesan_join,
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("✅ Unmute saya", callback_data="unmute_saya")]
+            ])
+        )
