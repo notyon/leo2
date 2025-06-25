@@ -40,16 +40,14 @@ async def on_message(client: Client, msg: Message):
         # print(f"-> {anu}")
 
         command = msg.text or msg.caption
-        
         # Cek apakah user belum join channel utama
-        try:
-    # kode yang mungkin menyebabkan error
-    except Exception as e:
+try:
+    if query.data == "unmute_saya":
+        # Unmute user di channel 2
+        await client.unban_chat_member(chat_id=CHANNEL_2, user_id=query.from_user.id)
+        await query.message.reply("✅ Kamu sudah di-unmute!")
+except Exception as e:
     print(e)
-
-    # setelah except, baru boleh pakai elif
-    if query.data == 'unmute_saya':
-        # aksi unmute
         
         elif query.data == 'unmute_saya':
             user_id = query.from_user.id
