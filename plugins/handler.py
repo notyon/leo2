@@ -43,9 +43,13 @@ async def on_message(client: Client, msg: Message):
         
         # Cek apakah user belum join channel utama
         try:
-            member = await client.get_chat_member(config.channel_1, uid)
-            if member.status not in ["member", "administrator", "creator"]:
-                raise Exception("Belum join")
+    # kode yang mungkin menyebabkan error
+    except Exception as e:
+    print(e)
+
+    # setelah except, baru boleh pakai elif
+    if query.data == 'unmute_saya':
+        # aksi unmute
         
         elif query.data == 'unmute_saya':
             user_id = query.from_user.id
