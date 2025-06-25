@@ -55,22 +55,22 @@ async def on_message(client: Client, msg: Message):
                 member = database.get_data_pelanggan()
                 if member.status in ['admin', 'owner']:
                     return await setting_handler(client, msg)
-            elif re.search(r"^[\/]tf_coin", command):
+            elif re.search(r"^[\/]{1}tf_coin", command):
                 return await transfer_coin_handler(client, msg)
-            elif re.search(r"^[\/]bot", command):
+            elif re.search(r"^[\/]{1}bot", command):
                 if uid == config.id_admin:
                     return await bot_handler(client, msg)
-            elif re.search(r"^[\/]admin", command):
+            elif re.search(r"^[\/]{1}admin", command):
                 if uid == config.id_admin:
                     return await tambah_admin_handler(client, msg)
-            elif re.search(r"^[\/]unadmin", command):
+            elif re.search(r"^[\/]{1}unadmin", command):
                 if uid == config.id_admin:
                     return await hapus_admin_handler(client, msg)
-            elif re.search(r"^[\/]ban", command):
+            elif re.search(r"^[\/]{1}ban", command):
                 member = database.get_data_pelanggan()
                 if member.status in ['admin', 'owner']:
                     return await ban_handler(client, msg)
-            elif re.search(r"^[\/]unban", command):
+            elif re.search(r"^[\/]{1}unban", command):
                 member = database.get_data_pelanggan()
                 if member.status in ['admin', 'owner']:
                     return await unban_handler(client, msg)
@@ -87,7 +87,7 @@ async def on_message(client: Client, msg: Message):
 
                 if key in hastag:
                     if key == command.lower() or len(command.split(' ')) < 3:
-                        return await msg.reply('🙅🏻‍♀️  post gagal terkirim, <b>mengirim pesan wajib lebih dari 3 kata.</b>', True, enums.ParseMode.HTML)
+                        return await msg.reply('\ud83d\ude45\u200d\u2640\ufe0f  post gagal terkirim, <b>mengirim pesan wajib lebih dari 3 kata.</b>', True, enums.ParseMode.HTML)
                     else:
                         return await send_menfess_handler(client, msg)
                 else:
@@ -133,6 +133,9 @@ async def on_callback_query(client: Client, query: CallbackQuery):
 # Cek otomatis keanggotaan user di channel 1 saat kirim pesan ke channel 2
 @Bot.on_message(filters.chat(config.channel_2))
 async def cek_keanggotaan_channel(client: Client, msg: Message):
+    if msg.from_user is None:
+        return
+
     user_id = msg.from_user.id
     try:
         member = await client.get_chat_member(config.channel_1, user_id)
